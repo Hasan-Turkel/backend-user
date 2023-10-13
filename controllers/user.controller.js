@@ -9,7 +9,7 @@ module.exports = {
         const data = await req.getModelList(User)
         res.status(200).send({
             error:false,
-            count:data.length,
+            detail: await req.getModelListDetails(User),
             result:data
         })
 
@@ -43,10 +43,9 @@ module.exports = {
     },
     delete : async (req, res) => {
 
-        const data = await User.deleteOne({id:req.params.id})
-        res.status(204).send({
-            error: false,
-            
+        const data = await User.deleteOne({_id:req.params.id})
+        res.status(d204).send({
+            error: false
         })
     },
 }
