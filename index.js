@@ -9,7 +9,7 @@ const PORT = process.env.PORT
 const dbConnection = require("./configs/dbConnection")
 dbConnection()
 
-
+app.use(require("./middlewares/findSearchSortPage"))
 app.use(express.json())
 
 app.all('/', (req, res) => {
@@ -20,6 +20,6 @@ app.all('/', (req, res) => {
     })
 })
 
-app.use(require("./middlewares/errorHandler"))
+app.use(require("./errorHandler"))
 
 app.listen(PORT, ()=> console.log("http://127.0.0.1:" + PORT))
