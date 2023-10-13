@@ -12,6 +12,9 @@ dbConnection()
 app.use(require("./middlewares/findSearchSortPage"))
 app.use(express.json())
 
+
+app.use("/user", require("./routes/user.router"))
+
 app.all('/', (req, res) => {
     res.send({
         error: false,
