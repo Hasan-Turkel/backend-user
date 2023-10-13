@@ -6,6 +6,8 @@ const app = express()
 require("dotenv").config()
 const PORT = process.env.PORT
 
+require('express-async-errors')
+
 const dbConnection = require("./configs/dbConnection")
 dbConnection()
 

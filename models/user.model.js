@@ -1,6 +1,5 @@
 "use strict"
 
-const { default: mongoose } = require("mongoose")
 
 const mongoose = require("mongoose")
 
@@ -28,6 +27,6 @@ const UserSchema = new mongoose.Schema({
 
     lastName: String,
 
-}, {collection:"users", UserSchema})
+}, {collection:"users", timestamps:true})
 
 module.exports = mongoose.model("User", UserSchema)

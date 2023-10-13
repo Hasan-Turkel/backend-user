@@ -43,7 +43,10 @@ module.exports = {
     },
     delete : async (req, res) => {
 
-        const data = await User.delete({id:req.params.id})
-        res.sendStatus((data.deletedCount >= 1) ? 204 : 404)
+        const data = await User.deleteOne({id:req.params.id})
+        res.status(204).send({
+            error: false,
+            
+        })
     },
 }
