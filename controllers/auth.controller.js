@@ -35,5 +35,56 @@ module.exports= {
             throw new Error('Please enter email and password.')
 
         }
-    }
-}
+    },
+
+    refresh: async (req, res)=>{
+
+        const refreshToken = req.body?.token?.refresh
+
+        if (refreshToken){
+
+            jwt.verify(refreshToken, process.env.SECRET_KEY, async function(err, userData){
+
+                if (userData){
+
+                    const {_id, password} = userData
+
+                    if(_id && password){
+
+                        const user = await User.findOne({ _id })
+
+                        if (user && user.password == password){
+
+                            res.send({
+                                error: false,
+                                message: "refresh succesfull",
+                                token: {
+                                            access: jwt.sign(user.toJSON(), process.env.SECRET_KEY, { expiresIn: '10m' }),
+                                            
+                                        }
+                            })
+
+                        } else{
+                            res.errorStatusCode = 401
+                            throw new Error('Wrong id or password.')
+                        }
+
+                    }else{
+                        res.errorStatusCode = 401
+                        throw new Error('Please enter id and password.')
+                    }
+
+
+                } else{
+                    
+                    res.errorStatusCode = 401
+                    throw err
+                }
+            })
+
+        } else{
+            res.errorStatusCode = 401
+            throw new Error('Please enter token.refresh')
+        }
+  
+}}
