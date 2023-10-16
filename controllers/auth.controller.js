@@ -1,5 +1,6 @@
 "use strict"
 
+const jwt = require("jsonwebtoken")
 const User = require("../models/user.model")
 
 module.exports= {
@@ -16,7 +17,11 @@ module.exports= {
 
                 res.send({
                     error: false,
-                    message: "login succesfull"
+                    message: "login succesfull",
+                    token: {
+                                access: jwt.sign(user.toJSON(), process.env.SECRET_KEY, { expiresIn: '10m' }),
+                                refresh: jwt.sign({ _id: user._id, password: user.password }, process.env.SECRET_KEY, { expiresIn: '3d' }),
+                            }
                 })
 
             }else{
