@@ -15,6 +15,8 @@ app.use(require("./middlewares/findSearchSortPage"))
 app.use(express.json())
 
 
+app.use('/auth', require('./routes/auth.router'))
+
 app.use("/user", require("./routes/user.router"))
 
 app.all('/', (req, res) => {
